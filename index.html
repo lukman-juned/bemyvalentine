@@ -24,6 +24,8 @@
 
     .container {
       text-align: center;
+      width: 100%;
+      max-width: 400px;
     }
 
     h1 {
@@ -35,30 +37,50 @@
     .buttons {
       position: relative;
       width: 100%;
-      height: 200px;
+      height: 240px;
     }
 
     button {
       border: none;
       cursor: pointer;
-      padding: 14px 28px;
+      padding: 14px 30px;
       font-size: 1.1rem;
       border-radius: 999px;
       transition: transform 0.2s ease;
+      touch-action: manipulation;
     }
 
+    /* YES BUTTON */
     #yesBtn {
       background-color: #ff4d6d;
       color: white;
+      animation: pulse 2.2s infinite;
     }
 
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.6);
+      }
+      50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 0 14px rgba(255, 77, 109, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 77, 109, 0);
+      }
+    }
+
+    /* NO BUTTON */
     #noBtn {
       background-color: #fff;
       color: #ff4d6d;
       position: absolute;
       left: 50%;
-      top: 50%;
+      top: 55%;
       transform: translate(-50%, -50%);
+      user-select: none;
     }
 
     .final-page {
@@ -66,6 +88,8 @@
       color: white;
       font-size: 2.5rem;
       font-weight: 600;
+      text-align: center;
+      padding: 20px;
     }
   </style>
 </head>
@@ -95,8 +119,10 @@
 
     function moveNoButton() {
       const padding = 20;
-      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+      const buttonRect = noBtn.getBoundingClientRect();
+      const maxX = window.innerWidth - buttonRect.width - padding;
+      const maxY = window.innerHeight - buttonRect.height - padding;
 
       const x = Math.random() * maxX;
       const y = Math.random() * maxY;
@@ -105,9 +131,19 @@
       noBtn.style.top = `${y}px`;
     }
 
-    // Run away when trying to hover or click
+    // Desktop: run away on hover
     noBtn.addEventListener("mouseenter", moveNoButton);
-    noBtn.addEventListener("click", () => {
+
+    // Mobile: run away on touch
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // If somehow clicked
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
       if (!noClickedOnce) {
         noBtn.textContent = "Please think again";
         noClickedOnce = true;
@@ -122,7 +158,9 @@
     // YES CLICK
     yesBtn.addEventListener("click", () => {
       mainPage.style.display = "none";
-      finalPage.style.display = "block";
+      finalPage.style.display = "flex";
+      finalPage.style.justifyContent = "center";
+      finalPage.style.alignItems = "center";
     });
   </script>
 
