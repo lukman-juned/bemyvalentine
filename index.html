@@ -15,22 +15,28 @@
       align-items: center;
       font-family: Arial, sans-serif;
       overflow: hidden;
+      color: white;
     }
 
-    .container {
+    .page {
+      display: none;
       text-align: center;
+      max-width: 600px;
+      padding: 20px;
+    }
+
+    .page.active {
+      display: block;
     }
 
     h1 {
-      color: white;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
-    .buttons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
+    p {
+      line-height: 1.7;
+      font-size: 1.1rem;
+      margin-bottom: 24px;
     }
 
     button {
@@ -61,18 +67,41 @@
       color: #ff4d6d;
     }
 
-    .final {
-      display: none;
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .soft-btn {
+      background: rgba(255,255,255,0.2);
       color: white;
-      font-size: 32px;
-      font-weight: bold;
+      border: 1px solid rgba(255,255,255,0.5);
     }
   </style>
 </head>
 <body>
 
-  <div class="container" id="page">
-    <h1 id="question">Will you be my valentine? 💖</h1>
+  <!-- INTRO PAGE -->
+  <div class="page active" id="introPage">
+    <h1>Hey you 💕</h1>
+    <p>
+      I don’t know when it started, but somewhere between
+      the small conversations and quiet moments,
+      you became someone I think about more than I should.
+    </p>
+    <p>
+      So before I ask you something important,
+      I just want you to know this comes from a very honest place.
+    </p>
+    <button class="soft-btn" id="toQuestion">Continue</button>
+  </div>
+
+  <!-- QUESTION PAGE -->
+  <div class="page" id="questionPage">
+    <h1>Will you be my valentine? 💖</h1>
 
     <div class="buttons">
       <button id="yesBtn">Yes</button>
@@ -80,19 +109,39 @@
     </div>
   </div>
 
-  <div class="final" id="final">
-    I know you’ll say yes 💕
+  <!-- FINAL PAGE -->
+  <div class="page" id="finalPage">
+    <h1>I knew it 💞</h1>
+    <p>
+      Of all the answers in the world,
+      this one feels just right.
+    </p>
+    <p>
+      Thank you for choosing me —
+      I promise I’ll make this worth your yes.
+    </p>
+    <p>
+      Happy Valentine’s Day ❤️
+    </p>
   </div>
 
   <script>
+    const introPage = document.getElementById("introPage");
+    const questionPage = document.getElementById("questionPage");
+    const finalPage = document.getElementById("finalPage");
+
+    const toQuestion = document.getElementById("toQuestion");
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
-    const page = document.getElementById("page");
-    const final = document.getElementById("final");
 
     let noPosition = { x: 0, y: 0 };
     let yesScale = 1;
     let noClicked = false;
+
+    toQuestion.addEventListener("click", () => {
+      introPage.classList.remove("active");
+      questionPage.classList.add("active");
+    });
 
     function moveNoButton() {
       const isMobile = window.innerWidth < 768;
@@ -103,21 +152,17 @@
       const newY = Math.random() * (maxY * 2) - maxY;
 
       noPosition = { x: newX, y: newY };
-
-      noBtn.style.transform = `translate(${noPosition.x}px, ${noPosition.y}px)`;
+      noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
     }
 
-    // Desktop
     noBtn.addEventListener("mouseenter", moveNoButton);
     noBtn.addEventListener("focus", moveNoButton);
 
-    // Mobile
     noBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       moveNoButton();
     });
 
-    // If clicked
     noBtn.addEventListener("click", () => {
       if (!noClicked) {
         noBtn.textContent = "Please think again 💔";
@@ -131,8 +176,8 @@
     });
 
     yesBtn.addEventListener("click", () => {
-      page.style.display = "none";
-      final.style.display = "block";
+      questionPage.classList.remove("active");
+      finalPage.classList.add("active");
     });
   </script>
 
