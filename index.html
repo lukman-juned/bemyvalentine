@@ -19,7 +19,6 @@
       overflow: hidden;
     }
 
-    /* Full-screen playground */
     .screen {
       position: relative;
       width: 100%;
@@ -33,6 +32,7 @@
     h1 {
       color: white;
       margin-bottom: 40px;
+      z-index: 1;
     }
 
     button {
@@ -41,56 +41,44 @@
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      touch-action: manipulation;
+      position: relative;
     }
 
-    /* YES */
+    /* YES — no transform */
     #yesBtn {
       background: #ff4d6d;
       color: white;
-      animation: pulse 2.5s infinite;
       z-index: 2;
+      overflow: visible;
+    }
+
+    /* Pulse ring instead of transform */
+    #yesBtn::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: inherit;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      animation: pulse 2.2s infinite;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
+      0% { opacity: 1; }
+      100% { opacity: 0; transform: scale(1.4); }
     }
 
-    /* NO */
+    /* NO — ABOVE YES */
     #noBtn {
       background: white;
       color: #ff4d6d;
       position: absolute;
-      left: 50%;
       top: 60%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 1;
+      z-index: 5;
       user-select: none;
     }
 
     .final {
       display: none;
-      color: white;
-      font-size: 2.5rem;
-      font-weight: bold;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="screen" id="screen">
-    <h1 id="question">Will you be my valentine? 💖</h1>
-
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
-
-    <div class="final" id="final">
-      I know you’ll say yes 💕
-    </div>
-  </div>
-
-  <script>
-    const noBtn = document.getElementBy
+      color
