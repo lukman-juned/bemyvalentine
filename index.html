@@ -8,77 +8,123 @@
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", sans-serif;
     }
 
     body {
       margin: 0;
       width: 100vw;
       height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       overflow: hidden;
     }
 
-    .screen {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    .container {
+      text-align: center;
     }
 
     h1 {
-      color: white;
+      color: #fff;
       margin-bottom: 40px;
-      z-index: 1;
+      font-size: 2.2rem;
+    }
+
+    .buttons {
+      position: relative;
+      width: 100%;
+      height: 200px;
     }
 
     button {
-      padding: 14px 30px;
-      font-size: 1.1rem;
-      border-radius: 999px;
       border: none;
       cursor: pointer;
-      position: relative;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      border-radius: 999px;
+      transition: transform 0.2s ease;
     }
 
-    /* YES — no transform */
     #yesBtn {
-      background: #ff4d6d;
+      background-color: #ff4d6d;
       color: white;
-      z-index: 2;
-      overflow: visible;
     }
 
-    /* Pulse ring instead of transform */
-    #yesBtn::after {
-      content: "";
-      position: absolute;
-      inset: -8px;
-      border-radius: inherit;
-      border: 2px solid rgba(255, 255, 255, 0.7);
-      animation: pulse 2.2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; }
-      100% { opacity: 0; transform: scale(1.4); }
-    }
-
-    /* NO — ABOVE YES */
     #noBtn {
-      background: white;
+      background-color: #fff;
       color: #ff4d6d;
       position: absolute;
-      top: 60%;
       left: 50%;
+      top: 50%;
       transform: translate(-50%, -50%);
-      z-index: 5;
-      user-select: none;
     }
 
-    .final {
+    .final-page {
       display: none;
-      color
+      color: white;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="mainPage">
+    <h1>Will you be my valentine? 💖</h1>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+  </div>
+
+  <div class="final-page" id="finalPage">
+    I know you’ll say yes 💕
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const mainPage = document.getElementById("mainPage");
+    const finalPage = document.getElementById("finalPage");
+
+    let yesScale = 1;
+    let noClickedOnce = false;
+
+    function moveNoButton() {
+      const padding = 20;
+      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+
+    // Run away when trying to hover or click
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("click", () => {
+      if (!noClickedOnce) {
+        noBtn.textContent = "Please think again";
+        noClickedOnce = true;
+      }
+
+      yesScale += 0.15;
+      yesBtn.style.transform = `scale(${yesScale})`;
+
+      moveNoButton();
+    });
+
+    // YES CLICK
+    yesBtn.addEventListener("click", () => {
+      mainPage.style.display = "none";
+      finalPage.style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
