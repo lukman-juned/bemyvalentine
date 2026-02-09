@@ -40,7 +40,7 @@
     }
 
     button {
-      padding: 14px 28px;
+      padding: 14px 32px;
       font-size: 18px;
       border-radius: 999px;
       border: none;
@@ -48,8 +48,8 @@
       transition: transform 0.3s ease;
     }
 
-    /* YES */
-    #yesBtn {
+    /* START & YES pulse */
+    .pulse {
       background: #ff4d6d;
       color: white;
       animation: pulse 2.5s infinite;
@@ -75,17 +75,37 @@
       margin-top: 20px;
     }
 
-    .soft-btn {
+    /* GIF placeholder */
+    .gif-box {
+      width: 100%;
+      max-width: 420px;
+      height: 240px;
+      margin: 0 auto 30px;
+      border-radius: 16px;
       background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
 
+  <!-- OPENING PAGE -->
+  <div class="page active" id="openingPage">
+    <div class="gif-box">
+      <!-- 🔽 PUT YOUR EMBEDDED GIF HERE 🔽 -->
+      <!-- Example: <img src="your-gif.gif" alt="gif" style="width:100%;height:100%;object-fit:cover;border-radius:16px;"> -->
+      GIF GOES HERE
+    </div>
+
+    <button class="pulse" id="startBtn">Start</button>
+  </div>
+
   <!-- INTRO PAGE -->
-  <div class="page active" id="introPage">
+  <div class="page" id="introPage">
     <h1>Hey you 💕</h1>
     <p>
       I don’t know when it started, but somewhere between
@@ -96,7 +116,7 @@
       So before I ask you something important,
       I just want you to know this comes from a very honest place.
     </p>
-    <button class="soft-btn" id="toQuestion">Continue</button>
+    <button class="pulse" id="toQuestion">Continue</button>
   </div>
 
   <!-- QUESTION PAGE -->
@@ -104,7 +124,7 @@
     <h1>Will you be my valentine? 💖</h1>
 
     <div class="buttons">
-      <button id="yesBtn">Yes</button>
+      <button class="pulse" id="yesBtn">Yes</button>
       <button id="noBtn">No 💔</button>
     </div>
   </div>
@@ -120,16 +140,16 @@
       Thank you for choosing me —
       I promise I’ll make this worth your yes.
     </p>
-    <p>
-      Happy Valentine’s Day ❤️
-    </p>
+    <p>Happy Valentine’s Day ❤️</p>
   </div>
 
   <script>
+    const openingPage = document.getElementById("openingPage");
     const introPage = document.getElementById("introPage");
     const questionPage = document.getElementById("questionPage");
     const finalPage = document.getElementById("finalPage");
 
+    const startBtn = document.getElementById("startBtn");
     const toQuestion = document.getElementById("toQuestion");
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
@@ -137,6 +157,11 @@
     let noPosition = { x: 0, y: 0 };
     let yesScale = 1;
     let noClicked = false;
+
+    startBtn.addEventListener("click", () => {
+      openingPage.classList.remove("active");
+      introPage.classList.add("active");
+    });
 
     toQuestion.addEventListener("click", () => {
       introPage.classList.remove("active");
