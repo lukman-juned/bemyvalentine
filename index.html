@@ -26,6 +26,8 @@
       text-align: center;
       width: 100%;
       max-width: 420px;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -36,7 +38,7 @@
 
     .buttons {
       position: relative;
-      height: 240px;
+      height: 200px;
     }
 
     button {
@@ -45,8 +47,8 @@
       padding: 14px 30px;
       font-size: 1.1rem;
       border-radius: 999px;
-      touch-action: manipulation;
       transition: transform 0.2s ease;
+      touch-action: manipulation;
     }
 
     /* YES */
@@ -54,6 +56,8 @@
       background-color: #ff4d6d;
       color: white;
       animation: pulse 2.2s infinite;
+      z-index: 3;
+      position: relative;
     }
 
     @keyframes pulse {
@@ -62,14 +66,15 @@
       100% { transform: scale(1); }
     }
 
-    /* NO — FIXED */
+    /* NO */
     #noBtn {
       background-color: #fff;
       color: #ff4d6d;
-      position: fixed; /* 🔑 key fix */
+      position: fixed;
       left: 50%;
-      top: 60%;
-      transform: translate(-50%, -50%);
+      top: calc(50% + 80px);
+      transform: translateX(-50%);
+      z-index: 1;
       user-select: none;
     }
 
@@ -80,6 +85,7 @@
       font-weight: 600;
       text-align: center;
       padding: 20px;
+      z-index: 5;
     }
   </style>
 </head>
@@ -93,4 +99,69 @@
     </div>
   </div>
 
-  <button id="noBt
+  <button id="noBtn">No</button>
+
+  <div class="final-page" id="finalPage">
+    I know you’ll say yes 💕
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const mainPage = document.getElementById("mainPage");
+    const finalPage = document.getElementById("finalPage");
+
+    let yesScale = 1;
+    let noClickedOnce = false;
+
+    function moveNoButton() {
+      const padding = 16;
+      const rect = noBtn.getBoundingClientRect();
+
+      const maxX = window.innerWidth - rect.width - padding;
+      const maxY = window.innerHeight - rect.height - padding;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+      noBtn.style.transform = "none";
+    }
+
+    // Desktop
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    // Mobile
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // If clicked
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      if (!noClickedOnce) {
+        noBtn.textContent = "Please think again";
+        noClickedOnce = true;
+      }
+
+      yesScale += 0.15;
+      yesBtn.style.transform = `scale(${yesScale})`;
+
+      moveNoButton();
+    });
+
+    // YES CLICK
+    yesBtn.addEventListener("click", () => {
+      mainPage.style.display = "none";
+      noBtn.style.display = "none";
+      finalPage.style.display = "flex";
+      finalPage.style.justifyContent = "center";
+      finalPage.style.alignItems = "center";
+    });
+  </script>
+
+</body>
+</html>
