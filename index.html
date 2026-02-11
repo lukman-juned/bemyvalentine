@@ -5,110 +5,25 @@
   <title>Dear Pretty Sierra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-      color: white;
-    }
-
-    .page {
-      display: none;
-      text-align: center;
-      max-width: 600px;
-      padding: 20px;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-    }
-
-    p {
-      line-height: 1.7;
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-    }
-
-    button {
-      padding: 14px 32px;
-      font-size: 18px;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    /* START & YES pulse */
-    .pulse {
-      background: #ff4d6d;
-      color: white;
-      animation: pulse 2.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-
-    /* NO */
-    #noBtn {
-      background: white;
-      color: #ff4d6d;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-    }
-
-    /* GIF placeholder */
-    .gif-box {
-      width: 100%;
-      max-width: 420px;
-      height: 240px;
-      margin: 0 auto 30px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-  </style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- OPENING PAGE -->
-  <div class="page active" id="openingPage">
+  <div class="page active" id="openingPage" data-page="opening">
     <h1>Welcome to my lost world</h1>
     <div class="gif-box">
       <img 
         src="https://64.media.tumblr.com/ab9fd8fbec670fa63569591e5aa376db/53491e08ef521d1a-4f/s540x810/7348a5a8483da7a4cfb7828401e40f318d62d147.gifv"
         alt="your personal Lucifer is here"
-        style="width:100%;height:100%;object-fit:cover;border-radius:16px;"
       >
     </div>
-
     <button class="pulse" id="startBtn">Start</button>
   </div>
 
   <!-- INTRO PAGE -->
-  <div class="page" id="introPage">
+  <div class="page" id="introPage" data-page="intro">
     <h1>To my prettiest little baby,</h1>
     <p>
       I don’t know when it started, but somewhere between
@@ -123,124 +38,36 @@
   </div>
 
   <!-- QUESTION PAGE -->
-  <div class="page" id="questionPage">
+  <div class="page" id="questionPage" data-page="question">
     <h1>Will you be my valentine? 💖</h1>
-
     <div class="buttons">
       <button class="pulse" id="yesBtn">YES ❤️</button>
       <button id="noBtn">NO 💔</button>
     </div>
   </div>
 
-  <!-- FINAL PAGE 1-->
-  <div class="page" id="finalPage1">
+  <!-- FINAL PAGE 1 -->
+  <div class="page" id="finalPage1" data-page="final1">
     <h1>Happy Valentine's Day, baby</h1>
     <p>
       I know you'll say "YES" to the question.<br>
       Even if you don't want to, there's no way you can say "NO" :p
     </p>
-    <p>
-      In this special day, I just want to say I love you. <br>
-      You may heard this few times already but I will just say it again.<br>
-      I love you, Sierra, with all of my heart, with all of the last strand of energy that I have left in my mortal body.
-      You know I always have a very limited energy, so saying this means a great thing even to myself.
-    </p>
-    <p>
-      And if you still wonder how big my love for you, then go grab a paper and a pen now.<br>
-      Yes, go get them now.
-    </p>
     <button class="pulse" id="tofp2">Continue</button>
   </div>
-  <!-- FINAL PAGE 2-->
-  <div class="page" id="finalPage2">
-    <p>
-      Got them already?
-    </p>
-    <p>
-      Now draw a little dot on the paper.
-    </p>
-    <p>
-      Now look at that little dot you just drew.
-    </p>
-    <p>
-      If the whole world is you, I'll love everything about you except that little dot.
-    </p>
-    <p>
-      That's how much I love you.
-    </p>
+
+  <!-- FINAL PAGE 2 -->
+  <div class="page" id="finalPage2" data-page="final2">
+    <p>If the whole world is you, I'll love everything about you except that little dot.</p>
     <p>Happy Valentine's Day ❤️</p>
-    <img src="https://i.pinimg.com/1200x/b9/4f/00/b94f00f38ac00d1fb7bf713673115aef.jpg" alt="description">
+    <img 
+      src="https://i.pinimg.com/1200x/b9/4f/00/b94f00f38ac00d1fb7bf713673115aef.jpg"
+      class="fixed-img"
+      alt="final image"
+    >
   </div>
 
-  <script>
-    const openingPage = document.getElementById("openingPage");
-    const introPage = document.getElementById("introPage");
-    const questionPage = document.getElementById("questionPage");
-    const finalPage1 = document.getElementById("finalPage1");
-    const finalPage2 = document.getElementById("finalPage2");
-
-    const startBtn = document.getElementById("startBtn");
-    const toQuestion = document.getElementById("toQuestion");
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const toFP2 = document.getElementById("tofp2");
-
-    let noPosition = { x: 0, y: 0 };
-    let yesScale = 1;
-    let noClicked = false;
-
-    startBtn.addEventListener("click", () => {
-      openingPage.classList.remove("active");
-      introPage.classList.add("active");
-    });
-
-    toQuestion.addEventListener("click", () => {
-      introPage.classList.remove("active");
-      questionPage.classList.add("active");
-    });
-
-    function moveNoButton() {
-      const isMobile = window.innerWidth < 768;
-      const maxX = isMobile ? 100 : 200;
-      const maxY = isMobile ? 100 : 200;
-
-      const newX = Math.random() * (maxX * 2) - maxX;
-      const newY = Math.random() * (maxY * 2) - maxY;
-
-      noPosition = { x: newX, y: newY };
-      noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-    }
-
-    noBtn.addEventListener("mouseenter", moveNoButton);
-    noBtn.addEventListener("focus", moveNoButton);
-
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNoButton();
-    });
-
-    noBtn.addEventListener("click", () => {
-      if (!noClicked) {
-        noBtn.textContent = "Please think again 💔";
-        noClicked = true;
-      }
-
-      yesScale += 0.15;
-      yesBtn.style.transform = `scale(${yesScale})`;
-
-      moveNoButton();
-    });
-
-    yesBtn.addEventListener("click", () => {
-      questionPage.classList.remove("active");
-      finalPage1.classList.add("active");
-    });
-
-    toFP2.addEventListener("click", () => {
-      finalPage1.classList.remove("active");
-      finalPage2.classList.add("active");
-    });
-  </script>
-
+  <!-- JS -->
+  <script src="script.js"></script>
 </body>
 </html>
