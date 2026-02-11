@@ -14,6 +14,9 @@ function showPage(pageKey) {
 const savedPage = localStorage.getItem("currentPage") || "opening";
 showPage(savedPage);
 
+/* 🔑 REMOVE LOADING PAGE BLINK */
+document.body.classList.remove("js-loading");
+
 /* Buttons */
 document.getElementById("startBtn")?.addEventListener("click", () => {
   showPage("intro");
