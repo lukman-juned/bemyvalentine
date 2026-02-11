@@ -79,3 +79,8 @@ button {
   object-fit: cover;
   border-radius: 16px;
 }
+
+/* Hide all pages until JS decides which one to show */
+body.js-loading .page {
+  display: none !important;
+}
