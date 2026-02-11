@@ -132,8 +132,8 @@
     </div>
   </div>
 
-  <!-- FINAL PAGE -->
-  <div class="page" id="finalPage">
+  <!-- FINAL PAGE 1-->
+  <div class="page" id="finalPage1">
     <h1>Happy Valentine's Day, baby</h1>
     <p>
       I know you'll say "YES" to the question.<br>
@@ -149,6 +149,10 @@
       And if you still wonder how big my love for you, then go grab a paper and a pen now.<br>
       Yes, go get them now.
     </p>
+    <button class="pulse" id="tofp2">Continue</button>
+  </div>
+  <!-- FINAL PAGE 2-->
+  <div class="page" id="finalPage2">
     <p>
       Got them already?
     </p>
@@ -171,12 +175,14 @@
     const openingPage = document.getElementById("openingPage");
     const introPage = document.getElementById("introPage");
     const questionPage = document.getElementById("questionPage");
-    const finalPage = document.getElementById("finalPage");
+    const finalPage1 = document.getElementById("finalPage1");
+    const finalPage2 = document.getElementById("finalPage2");
 
     const startBtn = document.getElementById("startBtn");
     const toQuestion = document.getElementById("toQuestion");
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const toFP2 = document.getElementById("tofp2");
 
     let noPosition = { x: 0, y: 0 };
     let yesScale = 1;
@@ -226,7 +232,12 @@
 
     yesBtn.addEventListener("click", () => {
       questionPage.classList.remove("active");
-      finalPage.classList.add("active");
+      finalPage1.classList.add("active");
+    });
+
+    toFP2.addEventListener("click", () => {
+      finalPage1.classList.remove("active");
+      finalPage2.classList.add("active");
     });
   </script>
 
