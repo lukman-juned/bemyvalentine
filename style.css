@@ -80,6 +80,12 @@ button {
   border-radius: 16px;
 }
 
+#homeBtn {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.9);
+  color: #ff4d6d;
+}
+
 /* Hide all pages until JS decides which one to show */
 body.js-loading .page {
   display: none !important;
