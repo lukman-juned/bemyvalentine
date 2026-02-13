@@ -63,3 +63,23 @@ noBtn?.addEventListener("click", () => {
   yesBtn.style.transform = `scale(${yesScale})`;
   moveNoButton();
 });
+
+const homeBtn = document.getElementById("homeBtn");
+
+homeBtn?.addEventListener("click", () => {
+  /* Reset playful states */
+  localStorage.removeItem("currentPage");
+
+  /* Reset YES / NO effects */
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+
+  if (yesBtn) yesBtn.style.transform = "scale(1)";
+  if (noBtn) {
+    noBtn.style.transform = "translate(0, 0)";
+    noBtn.textContent = "NO 💔";
+  }
+
+  /* Go home */
+  showPage("opening");
+});
